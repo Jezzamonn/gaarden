@@ -139,6 +139,9 @@ export default class Controller {
 			for (let i = 0; i < 5; i++) {
 				const randomEntity = this.random.pick(this.entities);
 				const eggPoint = randomEntity.tryGetFreeNearbyPoint(100, 80);
+				if (eggPoint == null) {
+					continue;
+				}
 
 				const egg = new Egg(this);
 				egg.position = eggPoint;

@@ -1,0 +1,90 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" x="0px" y="0px" width="640px" height="480px" viewBox="0 0 640 480">
+<defs>
+<g id="circle_0_Layer0_0_FILL">
+<path fill="#CCE6D7" stroke="none" d="
+M 3.5 -3.55
+Q 2.05 -5 0 -5 -2.05 -5 -3.55 -3.55 -5 -2.05 -5 0 -5 2.05 -3.55 3.5 -3.3 3.75 -3 3.95 -1.75 5 -0.05 5
+L 0.1 5
+Q 1.75 5 3 3.95 3.25 3.75 3.5 3.5 5 2.05 5 0 5 -2.05 3.5 -3.55 Z"/>
+</g>
+
+<path id="person_0_Layer0_0_1_STROKES" stroke="#000000" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" fill="none" d="
+M 2.1 -2.5
+L 2.2 0
+M -2.1 -2.5
+L -2.2 0"/>
+
+<path id="circle_0_Layer0_0_1_STROKES" stroke="#000000" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" fill="none" d="
+M 5 0
+Q 5 2.05 3.5 3.5 3.25 3.75 3 3.95 1.75 5 0.1 5
+L -0.05 5
+Q -1.75 5 -3 3.95 -3.3 3.75 -3.55 3.5 -5 2.05 -5 0 -5 -2.05 -3.55 -3.55 -2.05 -5 0 -5 2.05 -5 3.5 -3.55 5 -2.05 5 0 Z"/>
+
+<path id="animal_0_Layer0_0_1_STROKES" stroke="#000000" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" fill="none" d="
+M 3.1 -2.6
+L 3.1 0
+M -3.25 -2.7
+L -3.25 0"/>
+</defs>
+
+<g id="Layer_1">
+<g transform="matrix( 1, 0, 0, 1, 315,180) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#person_0_Layer0_0_1_STROKES"/>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 0,-7) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#circle_0_Layer0_0_FILL"/>
+
+<use xlink:href="#circle_0_Layer0_0_1_STROKES"/>
+</g>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 0,-15) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#circle_0_Layer0_0_FILL"/>
+
+<use xlink:href="#circle_0_Layer0_0_1_STROKES"/>
+</g>
+</g>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 335,180) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#animal_0_Layer0_0_1_STROKES"/>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 0,-7) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#circle_0_Layer0_0_FILL"/>
+
+<use xlink:href="#circle_0_Layer0_0_1_STROKES"/>
+</g>
+</g>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 295,180) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#person_0_Layer0_0_1_STROKES"/>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 0,-7) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#circle_0_Layer0_0_FILL"/>
+
+<use xlink:href="#circle_0_Layer0_0_1_STROKES"/>
+</g>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 0,-15) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#circle_0_Layer0_0_FILL"/>
+
+<use xlink:href="#circle_0_Layer0_0_1_STROKES"/>
+</g>
+</g>
+</g>
+</g>
+</svg>
