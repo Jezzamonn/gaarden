@@ -1,17 +1,17 @@
 import { Drawable } from "./drawable";
 import { slurp } from "../util";
 
-export class DrawCircle extends Drawable {
+export class DrawElLipse extends Drawable {
 
-    constructor(centerPoint, radius, startAngle, endAngle) {
+    constructor(centerPoint, radii, startAngle, endAngle) {
         this.centerPoint = centerPoint;
-        this.radius = radius;
+        this.radii = radii;
         this.startAngle = startAngle;
         this.endAngle = endAngle;
     }
 
     get length() {
-		return this.radius * Math.abs(this.endAngle - this.startAngle);
+		return Math.min(this.radii.x, this.radii.y) * Math.abs(this.endAngle - this.startAngle);
     }
 
     /**
@@ -24,7 +24,7 @@ export class DrawCircle extends Drawable {
         context.strokeStyle = 'black';
         context.lineWidth = 1;
         context.beginPath();
-        context.arc(this.centerPoint.x, this.centerPoint.y, this.radius, s, e);
+        context.ellipse(this.centerPoint.x, this.centerPoint.y, this.radii.x, this.radii.y, 0, s, e);
         context.stroke();
     }
 }
