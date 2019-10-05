@@ -4,6 +4,8 @@ import { Tree } from "./entity/tree";
 import { BabyTree } from "./entity/babytree";
 import { sqDistBetween } from "./util";
 import { Person } from "./entity/person";
+import { House } from "./entity/house";
+import { Egg } from "./entity/egg";
 
 export default class Controller {
 
@@ -40,7 +42,7 @@ export default class Controller {
 		this.newEntities = [];
 		this.entities = this.entities.filter(e => !e.done);
 
-		this.spawnBabyTrees();
+		this.spawnNewEntities();
 	}
 
 	/**
@@ -89,8 +91,13 @@ export default class Controller {
 		return closest;
 	}
 
+	spawnNewEntities() {
+		this.trySpawnBabyTrees();
+		this.trySpawnEgg();
+	}
+
 	// Game stuff
-	spawnBabyTrees() {
+	trySpawnBabyTrees() {
 		let numBabyTrees = this.entities.filter(e => e instanceof BabyTree).length;
 		const trees = this.entities.filter(e => e instanceof Tree);
 		
@@ -115,6 +122,26 @@ export default class Controller {
 			bb.position = point;
 			this.entities.push(bb);
 			numBabyTrees++;
+		}
+	}
+
+	trySpawnEgg() {
+		const eggs = this.entities.filter(e => e instanceof Egg);
+		if (eggs.length >= 1) {
+			return;
+		}
+		const houses = this.entities.filter(e => e instanceof House);
+		
+		if (houses.length >= 2) {
+			for (let i = 0; i < 5; i++) {
+				const randomEntity = this.random.pick(this.entities);
+				const eggPoint = randomEntity.tryGetFreeNearbyPoint(100, 80);
+
+				const egg = new Egg(this);
+				egg.position = eggPoint;
+				this.entities.push(egg);
+				break;
+			}
 		}
 	}
 }
