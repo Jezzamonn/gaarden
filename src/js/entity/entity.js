@@ -1,16 +1,30 @@
-import { sqDistBetween } from "../util";
+import { sqDistBetween, multiplyPoint, addPoints, normalisePoint, clampMagnitude } from "../util";
+import Controller from "../controller";
+import { Behaviour } from "../behaviour/behaviour";
 
 export class Entity {
 
+    /**
+     * @param {Controller} controller 
+     */
 	constructor(controller) {
         // Center ground position, methinks
         this.controller = controller;
+        // Properties
+        this.debugName = 'entity';
+        this.maxSpeed = 20;
+        this.accel = 20;
+        this.damp = 0.9;
+
+        // State
         this.position = {x: 0, y: 0};
+        this.velocity = {x: 0, y: 0};
         this.active = true;
         this.done = false;
-        this.debugName = 'entity';
         this.updated = false;
-    }
+        /** @type {Behaviour} */
+        this.behaviour = null
+   }
     
 	/**
 	 * Simulate time passing.
@@ -20,9 +34,27 @@ export class Entity {
             this.firstUpdate();
             this.updated = true;
         }
+
+        if (this.behaviour) {
+            this.behaviour.update(dt);
+        }
     }
 
     firstUpdate() {}
+
+
+    accelInDir(direction, dt) {
+        const accelVec = multiplyPoint(this.accel, normalisePoint(direction));
+        this.velocity = clampMagnitude(addPoints(accelVec, this.velocity), this.maxSpeed)
+    }
+
+    applyVelocity(dt) {
+        this.position = addPoints(this.position, multiplyPoint(dt, this.velocity));
+    }
+
+    dampen(dt) {
+        this.velocity = multiplyPoint(this.damp, this.velocity);
+    }
 
 	/**
 	 * Render the current state of the controller.

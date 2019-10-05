@@ -3,6 +3,7 @@ import { Random, MersenneTwister19937 } from "random-js";
 import { Tree } from "./entity/tree";
 import { BabyTree } from "./entity/babytree";
 import { sqDistBetween } from "./util";
+import { Person } from "./entity/person";
 
 export default class Controller {
 
@@ -10,6 +11,7 @@ export default class Controller {
 		this.random = new Random(MersenneTwister19937.seed(123));
 		/** @type {!Array<!Entity>} */
 		this.entities = [];
+		this.newEntities = [];
 		for (let i = 0; i < 1; i++) {
 			const entity = new BabyTree(this);
 			entity.position = {
@@ -18,7 +20,14 @@ export default class Controller {
 			};
 			this.entities.push(entity);
 		}
-		this.newEntities = [];
+		for (let i = 0; i < 5; i++) {
+			const entity = new Person(this);
+			entity.position = {
+				x: this.random.real(-100, 100),
+				y: this.random.real(-100, 100),
+			};
+			this.entities.push(entity);
+		}
 
 		// this.cameraPosition = {x: 200, y: 200, scale: 0.5};
 		this.cameraPosition = {x: 0, y: 0, scale: 1};
