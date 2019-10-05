@@ -28,18 +28,34 @@ export class TreeCluster extends Entity {
             this.controller.newEntities.push(person);
             return;
         }
-        if (treesInCluster.length == 8) {
+        if (treesInCluster.length == 8 || treesInCluster.length == 16) {
             const newCluster = new TreeCluster(this.controller);
             const newBaby = new BabyTree(this.controller, newCluster);
+            let point = null;
             for (let i = 0; i < 10; i++) {
                 const randomTree = this.controller.random.pick(treesInCluster);
-                const point = randomTree.tryGetFreeNearbyPoint(200, 180);
+                point = randomTree.tryGetFreeNearbyPoint(200, 180);
                 if (point == null) {
                     continue;
                 }
-                newBaby.position = point;
                 break;
             }
+            // As a fall back, try ANY tree
+            if (point == null) {
+                const allTrees = this.controller.entities.filter(e => e instanceof Tree);
+                for (let i = 0; i < 10; i++) {
+                    const randomTree = this.controller.random.pick(allTrees);
+                    point = randomTree.tryGetFreeNearbyPoint(300, 260);
+                    if (point == null) {
+                        continue;
+                    }
+                    break;
+                }
+            }
+            if (point == null) {
+                return;
+            }
+            newBaby.position = point;
             this.controller.newEntities.push(newCluster, newBaby);
             return;
         }
