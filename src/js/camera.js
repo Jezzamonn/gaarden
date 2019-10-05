@@ -61,7 +61,7 @@ export class Camera {
         const height = Math.max(bottom.y - top.y, DEFAULT_SIZE);
         const xScale = DEFAULT_SIZE / width;
         const yScale = DEFAULT_SIZE / height;
-        this.desiredZoom = Math.min(xScale, yScale);
+        this.desiredZoom = 0.9 * Math.min(xScale, yScale);
     }
 
     /**
