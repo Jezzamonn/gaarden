@@ -41,17 +41,23 @@ export default class Controller {
 		context.translate(-this.cameraPosition.x, -this.cameraPosition.y);
 		context.scale(this.cameraPosition.scale, this.cameraPosition.scale);
 
+		this.sortEntities();
 		for (const entity of this.entities) {
 			entity.render(context);
 		}
 	}
 
 	handleClick(point) {
+		this.sortEntities();
 		for (const entity of this.entities) {
 			const handledClick = entity.checkClick(point);
 			if (handledClick) {
 				return;
 			}
 		}
+	}
+
+	sortEntities() {
+		this.entities.sort((a, b) => a.position.y - b.position.y);
 	}
 }

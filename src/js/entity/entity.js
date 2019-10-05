@@ -10,8 +10,6 @@ export class Entity {
 	 * Simulate time passing.
 	 */
 	update() {
-        this.position.x += this.controller.random.real(-1, 1);
-        this.position.y += this.controller.random.real(-1, 1);
 	}
 
 	/**
@@ -23,13 +21,17 @@ export class Entity {
         context.save();
         context.translate(this.position.x, this.position.y);
 
+        this.localRender(context);
+
+        context.restore();
+    }
+
+    localRender(context) {
         context.strokeStyle = 'black';
         context.lineWidth = 1;
         context.beginPath();
         context.arc(0, 0, 10, 0, 2 * Math.PI);
         context.stroke();
-
-        context.restore();
     }
 
     checkClick(point) {
