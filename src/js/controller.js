@@ -63,17 +63,14 @@ export default class Controller {
 
 	handleClick(point) {
 		const adjustedPoint = this.camera.pointToGameCoords(point);
-		const egg = new Egg(this);
-		egg.position = adjustedPoint;
-		this.entities.push(egg);
-		// this.entities[0].position = adjustedPoint;
-		// this.sortEntities();
-		// for (const entity of this.entities) {
-		// 	const handledClick = entity.checkClick(adjustedPoint);
-		// 	if (handledClick) {
-		// 		return;
-		// 	}
-		// }
+
+		this.sortEntities();
+		for (const entity of this.entities) {
+			const handledClick = entity.checkClick(adjustedPoint);
+			if (handledClick) {
+				return;
+			}
+		}
 	}
 
 	sortEntities() {
