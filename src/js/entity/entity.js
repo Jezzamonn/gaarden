@@ -1,3 +1,5 @@
+import { sqDistBetween } from "../util";
+
 export class Entity {
 
 	constructor(controller) {
@@ -69,6 +71,18 @@ export class Entity {
             x: this.position.x + dist * Math.cos(angle),
             y: this.position.y + dist * Math.sin(angle),
         }
+    }
+
+    tryGetFreeNearbyPoint(dist, minOtherDist) {
+        for (let i = 0; i < 10; i++) {
+            const point = this.getNearbyPoint(dist);
+            const closestEntity = this.controller.getClosestEntity(point);
+            const closestSqDist = sqDistBetween(point, closestEntity.position);
+            if (closestSqDist > minOtherDist * minOtherDist) {
+                return point;
+            }
+        }
+        return null;
     }
 
 }

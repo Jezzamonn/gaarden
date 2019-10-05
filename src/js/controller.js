@@ -2,6 +2,7 @@ import { Entity } from "./entity/entity";
 import { Random, MersenneTwister19937 } from "random-js";
 import { Tree } from "./entity/tree";
 import { BabyTree } from "./entity/babytree";
+import { sqDistBetween } from "./util";
 
 export default class Controller {
 
@@ -70,9 +71,22 @@ export default class Controller {
 		this.entities.sort((a, b) => a.position.y - b.position.y);
 	}
 
+	getClosestEntity(point) {
+		let bestSqDist = Infinity;
+		let closest = null;
+		for (const entity of this.entities) {
+			const sqDist = sqDistBetween(point, entity.position);
+			if (sqDist < bestSqDist) {
+				bestSqDist = sqDist;
+				closest = entity;
+			}
+		}
+		return closest;
+	}
+
 	// Game stuff
 	spawnBabyTrees() {
-		const numBabyTrees = this.entities.filter(e => e instanceof BabyTree).length;
+		let numBabyTrees = this.entities.filter(e => e instanceof BabyTree).length;
 		const trees = this.entities.filter(e => e instanceof Tree);
 		
 		let wantedBabies = 0;
@@ -83,12 +97,19 @@ export default class Controller {
 			wantedBabies = Math.floor(trees.length / 5) + 2;
 		}
 
-		for (let i = numBabyTrees; i < wantedBabies; i++) {
+		for (let i = 0; i < 10; i++) {
+			if (numBabyTrees >= wantedBabies) {
+				return;
+			}
 			const randomTree = this.random.pick(trees);
-			const point = randomTree.getNearbyPoint(30);
+			const point = randomTree.tryGetFreeNearbyPoint(30, 20);
+			if (point == null) {
+				continue;
+			}
 			const bb = new BabyTree(this);
 			bb.position = point;
 			this.entities.push(bb);
+			numBabyTrees++;
 		}
 	}
 }
