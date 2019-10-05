@@ -8,12 +8,15 @@ export default class Controller {
 		this.entities = [];
 		for (let i = 0; i < 10; i++) {
 			const entity = new Entity(this);
-			entity.x = this.random.real(-10, 10);
-			entity.y = this.random.real(-10, 10);
+			entity.position = {
+				x: this.random.real(-10, 10),
+				y: this.random.real(-10, 10),
+			};
 			this.entities.push(entity);
 		}
 
-		this.cameraPosition = {x: 200, y: 200, scale: 0.5};
+		// this.cameraPosition = {x: 200, y: 200, scale: 0.5};
+		this.cameraPosition = {x: 0, y: 0, scale: 1};
 	}
 
 	/**
@@ -41,4 +44,8 @@ export default class Controller {
 		}
 	}
 
+	handleClick(point) {
+		this.entities[0].position.x = point.x;
+		this.entities[0].position.y = point.y;
+	}
 }

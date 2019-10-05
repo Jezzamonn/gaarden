@@ -20,6 +20,8 @@ function init() {
 	window.addEventListener('resize', handleResize);
 	// Kick off the update loop
 	window.requestAnimationFrame(everyFrame);
+
+	document.addEventListener('mousemove', handleClick);
 }
 
 // TODO: Make tweak this to allow frame skipping for slow computers. Maybe.
@@ -47,6 +49,17 @@ function render() {
 	context.scale(scale, scale);
 
 	controller.render(context);
+}
+
+/**
+ * @param {MouseEvent} event 
+ */
+function handleClick(event) {
+	const pixelRatio = window.devicePixelRatio || 1;
+	controller.handleClick({
+		x: (event.clientX - window.innerWidth / 2) / (scale / pixelRatio),
+		y: (event.clientY - window.innerHeight / 2) / (scale / pixelRatio),
+	});
 }
 
 function handleResize(evt) {
