@@ -152,3 +152,11 @@ export function multiplyPoint(scalar, point) {
 export function sqMagnitude(point) {
     return point.x * point.x + point.y * point.y;
 }
+
+export function clonePoint(point) {
+    return {x: point.x, y: point.y}
+}
+
+export function sqDistBetween(p1, p2) {
+    return sqMagnitude(subPoints(p1, p2));
+}

@@ -13,7 +13,7 @@ export class Person extends Entity {
     }
 
     update(dt) {
-        if (this.controller.random.bool(0.01)) {
+        if (!this.goal && this.controller.random.bool(0.03)) {
             const wanderDist = 60;
             this.goal = {
                 x: this.position.x + this.controller.random.real(-wanderDist, wanderDist),

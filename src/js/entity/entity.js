@@ -3,14 +3,24 @@ export class Entity {
 	constructor(controller) {
         // Center ground position, methinks
         this.controller = controller;
-        this.position = {x: 0, y: 0}
-	}
-
+        this.position = {x: 0, y: 0};
+        this.active = true;
+        this.done = false;
+        this.debugName = 'entity';
+        this.updated = false;
+    }
+    
 	/**
 	 * Simulate time passing.
 	 */
 	update(dt) {
-	}
+        if (!this.updated) {
+            this.firstUpdate();
+            this.updated = true;
+        }
+    }
+
+    firstUpdate() {}
 
 	/**
 	 * Render the current state of the controller.
@@ -32,6 +42,7 @@ export class Entity {
         context.beginPath();
         context.arc(0, 0, 10, 0, 2 * Math.PI);
         context.stroke();
+        context.fillText(this.debugName, 0, 0)
     }
 
     checkClick(point) {
@@ -50,6 +61,14 @@ export class Entity {
         const yDiff = point.y - this.position.y;
         const sqDist = (xDiff * xDiff + yDiff * yDiff);
         return sqDist < 10 * 10;
+    }
+
+    getNearbyPoint(dist) {
+        const angle = this.controller.random.real(0, 2 * Math.PI);
+        return {
+            x: this.position.x + dist * Math.cos(angle),
+            y: this.position.y + dist * Math.sin(angle),
+        }
     }
 
 }

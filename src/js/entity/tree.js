@@ -1,7 +1,20 @@
 import { Entity } from "./entity";
 import { Person } from "./person";
+import { clonePoint } from "../util";
 
 export class Tree extends Entity {
+
+    firstUpdate() {
+        const numTrees = this.controller.entities.filter(e => e instanceof Tree).length;
+        if (numTrees % 4 == 0) {
+            const person = new Person(this.controller);
+            person.position = {
+                x: this.position.x,
+                y: this.position.y - 0.1,
+            }
+            this.controller.newEntities.push(person);
+        }
+    }
 
     /**
      * @param {CanvasRenderingContext2D} context 
@@ -18,14 +31,6 @@ export class Tree extends Entity {
         context.closePath();
         context.fill();
         context.stroke();
-    }
-
-    handleClick() {
-        const babie = new Person(this.controller);
-        babie.position.x = this.position.x + this.controller.random.real(-10, 10);
-        babie.position.y = this.position.y + this.controller.random.real(-10, 10);
-        this.controller.entities.push(babie);
-        return true;
     }
 
 }

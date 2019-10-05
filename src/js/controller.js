@@ -1,6 +1,7 @@
 import { Entity } from "./entity/entity";
 import { Random, MersenneTwister19937 } from "random-js";
 import { Tree } from "./entity/tree";
+import { BabyTree } from "./entity/babytree";
 
 export default class Controller {
 
@@ -8,14 +9,15 @@ export default class Controller {
 		this.random = new Random(MersenneTwister19937.seed(123));
 		/** @type {!Array<!Entity>} */
 		this.entities = [];
-		for (let i = 0; i < 10; i++) {
-			const entity = new Tree(this);
+		for (let i = 0; i < 1; i++) {
+			const entity = new BabyTree(this);
 			entity.position = {
 				x: this.random.real(-100, 100),
 				y: this.random.real(-100, 100),
 			};
 			this.entities.push(entity);
 		}
+		this.newEntities = [];
 
 		// this.cameraPosition = {x: 200, y: 200, scale: 0.5};
 		this.cameraPosition = {x: 0, y: 0, scale: 1};
@@ -31,6 +33,12 @@ export default class Controller {
 		for (const entity of this.entities) {
 			entity.update(tick);
 		}
+
+		this.entities.push(...this.newEntities);
+		this.newEntities = [];
+		this.entities = this.entities.filter(e => !e.done);
+
+		this.spawnBabyTrees();
 	}
 
 	/**
@@ -60,5 +68,27 @@ export default class Controller {
 
 	sortEntities() {
 		this.entities.sort((a, b) => a.position.y - b.position.y);
+	}
+
+	// Game stuff
+	spawnBabyTrees() {
+		const numBabyTrees = this.entities.filter(e => e instanceof BabyTree).length;
+		const trees = this.entities.filter(e => e instanceof Tree);
+		
+		let wantedBabies = 0;
+		if (trees.length == 0) {
+			wantedBabies = 0;
+		}
+		else {
+			wantedBabies = Math.floor(trees.length / 5) + 2;
+		}
+
+		for (let i = numBabyTrees; i < wantedBabies; i++) {
+			const randomTree = this.random.pick(trees);
+			const point = randomTree.getNearbyPoint(30);
+			const bb = new BabyTree(this);
+			bb.position = point;
+			this.entities.push(bb);
+		}
 	}
 }
