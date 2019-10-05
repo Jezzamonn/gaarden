@@ -22,7 +22,8 @@ export class Person extends Entity {
             }
         }
     }
-   /**
+
+    /**
      * @param {CanvasRenderingContext2D} context 
      */
     localRender(context) {

@@ -16,4 +16,20 @@ export class BabyTree extends Entity {
         return true;
     }
 
+    /**
+     * @param {CanvasRenderingContext2D} context 
+     */
+    localRender(context) {
+        context.strokeStyle = 'black';
+        context.lineWidth = 1;
+
+        context.beginPath();
+        context.moveTo(-5, -5);
+        context.lineTo(5, 5);
+        
+        context.moveTo(-5, 5);
+        context.lineTo(5, -5);
+        context.stroke();
+    }
+
 }

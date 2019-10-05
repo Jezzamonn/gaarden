@@ -8,4 +8,28 @@ export class Animal extends Entity {
         this.behaviour = new WanderBehaviour(controller, this);
         this.debugName = 'animal';
     }
+
+    /**
+     * @param {CanvasRenderingContext2D} context 
+     */
+    localRender(context) {
+        context.strokeStyle = 'black';
+        context.fillStyle = 'white';
+        context.lineWidth = 1;
+
+        context.beginPath();
+        context.moveTo(-3, 0);
+        context.lineTo(-3, -5);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(3, 0);
+        context.lineTo(3, -5);
+        context.stroke();
+
+        context.beginPath();
+        context.arc(0, -7, 5, 0, 2 * Math.PI);
+        context.fill();
+        context.stroke();
+    }
 }
