@@ -6,6 +6,7 @@ import { sqDistBetween } from "./util";
 import { Person } from "./entity/person";
 import { House } from "./entity/house";
 import { Egg } from "./entity/egg";
+import { Camera } from "./camera";
 
 export default class Controller {
 
@@ -23,8 +24,7 @@ export default class Controller {
 			this.entities.push(entity);
 		}
 
-		// this.cameraPosition = {x: 200, y: 200, scale: 0.5};
-		this.cameraPosition = {x: 0, y: 0, scale: 1};
+		this.camera = new Camera(this);
 	}
 
 	/**
@@ -43,6 +43,8 @@ export default class Controller {
 		this.entities = this.entities.filter(e => !e.done);
 
 		this.spawnNewEntities();
+
+		this.camera.update(dt);
 	}
 
 	/**
@@ -51,8 +53,7 @@ export default class Controller {
 	 * @param {!CanvasRenderingContext2D} context
 	 */
 	render(context) {
-		context.translate(-this.cameraPosition.x, -this.cameraPosition.y);
-		context.scale(this.cameraPosition.scale, this.cameraPosition.scale);
+		this.camera.transformContext(context);
 
 		this.sortEntities();
 		for (const entity of this.entities) {
@@ -61,13 +62,18 @@ export default class Controller {
 	}
 
 	handleClick(point) {
-		this.sortEntities();
-		for (const entity of this.entities) {
-			const handledClick = entity.checkClick(point);
-			if (handledClick) {
-				return;
-			}
-		}
+		const adjustedPoint = this.camera.pointToGameCoords(point);
+		const egg = new Egg(this);
+		egg.position = adjustedPoint;
+		this.entities.push(egg);
+		// this.entities[0].position = adjustedPoint;
+		// this.sortEntities();
+		// for (const entity of this.entities) {
+		// 	const handledClick = entity.checkClick(adjustedPoint);
+		// 	if (handledClick) {
+		// 		return;
+		// 	}
+		// }
 	}
 
 	sortEntities() {
