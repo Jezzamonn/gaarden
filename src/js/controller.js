@@ -7,6 +7,7 @@ import { Person } from "./entity/person";
 import { House } from "./entity/house";
 import { Egg } from "./entity/egg";
 import { Camera } from "./camera";
+import { TreeCluster } from "./entity/treecluster";
 
 export default class Controller {
 
@@ -15,16 +16,19 @@ export default class Controller {
 		/** @type {!Array<!Entity>} */
 		this.entities = [];
 		this.newEntities = [];
-		for (let i = 0; i < 1; i++) {
-			const entity = new BabyTree(this);
-			entity.position = {
-				x: this.random.real(-100, 100),
-				y: this.random.real(-100, 100),
-			};
-			this.entities.push(entity);
-		}
-
 		this.camera = new Camera(this);
+
+		this.spawnInitialTree();
+	}
+
+	spawnInitialTree() {
+		const cluster = new TreeCluster(this);
+		const entity = new BabyTree(this, cluster);
+		entity.position = {
+			x: this.random.real(-100, 100),
+			y: this.random.real(-100, 100),
+		};
+		this.entities.push(entity, cluster);
 	}
 
 	/**
@@ -95,37 +99,7 @@ export default class Controller {
 	}
 
 	spawnNewEntities() {
-		this.trySpawnBabyTrees();
 		this.trySpawnEgg();
-	}
-
-	// Game stuff
-	trySpawnBabyTrees() {
-		let numBabyTrees = this.entities.filter(e => e instanceof BabyTree).length;
-		const trees = this.entities.filter(e => e instanceof Tree);
-		
-		let wantedBabies = 0;
-		if (trees.length == 0) {
-			wantedBabies = 0;
-		}
-		else {
-			wantedBabies = Math.floor(trees.length / 5) + 2;
-		}
-
-		for (let i = 0; i < 10; i++) {
-			if (numBabyTrees >= wantedBabies) {
-				return;
-			}
-			const randomTree = this.random.pick(trees);
-			const point = randomTree.tryGetFreeNearbyPoint(30, 20);
-			if (point == null) {
-				continue;
-			}
-			const bb = new BabyTree(this);
-			bb.position = point;
-			this.entities.push(bb);
-			numBabyTrees++;
-		}
 	}
 
 	trySpawnEgg() {
