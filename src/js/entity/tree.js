@@ -1,13 +1,23 @@
 import { Entity } from "./entity";
 import { Person } from "./person";
 import { clonePoint } from "../util";
+import { Animal } from "./animal";
 
 export class Tree extends Entity {
 
     firstUpdate() {
         const numTrees = this.controller.entities.filter(e => e instanceof Tree).length;
-        if (numTrees % 4 == 0) {
+        if (numTrees == 4) {
             const person = new Person(this.controller);
+            person.position = {
+                x: this.position.x,
+                y: this.position.y - 0.1,
+            }
+            this.controller.newEntities.push(person);
+            return;
+        }
+        if (numTrees % 4 == 0) {
+            const person = new Animal(this.controller);
             person.position = {
                 x: this.position.x,
                 y: this.position.y - 0.1,

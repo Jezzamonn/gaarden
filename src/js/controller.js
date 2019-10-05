@@ -20,14 +20,6 @@ export default class Controller {
 			};
 			this.entities.push(entity);
 		}
-		for (let i = 0; i < 5; i++) {
-			const entity = new Person(this);
-			entity.position = {
-				x: this.random.real(-100, 100),
-				y: this.random.real(-100, 100),
-			};
-			this.entities.push(entity);
-		}
 
 		// this.cameraPosition = {x: 200, y: 200, scale: 0.5};
 		this.cameraPosition = {x: 0, y: 0, scale: 1};
@@ -80,10 +72,14 @@ export default class Controller {
 		this.entities.sort((a, b) => a.position.y - b.position.y);
 	}
 
-	getClosestEntity(point) {
+	getClosestEntity(point, filter = null) {
 		let bestSqDist = Infinity;
 		let closest = null;
-		for (const entity of this.entities) {
+		let entities = this.entities;
+		if (filter) {
+			entities = entities.filter(filter);
+		}
+		for (const entity of entities) {
 			const sqDist = sqDistBetween(point, entity.position);
 			if (sqDist < bestSqDist) {
 				bestSqDist = sqDist;
