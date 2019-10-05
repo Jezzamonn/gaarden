@@ -36,13 +36,14 @@ export class Entity {
 
     checkClick(point) {
         if (this.touchingPoint(point)) {
-            this.handleClick();
-            return true;
+            return this.handleClick();
         }
         return false;
     }
 
-    handleClick() {}
+    handleClick() {
+        return false;
+    }
 
     touchingPoint(point) {
         const xDiff = point.x - this.position.x;
