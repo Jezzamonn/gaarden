@@ -1,3 +1,5 @@
+import { clamp } from "../util";
+
 // The two safe draws make an infinite loop so make sure you define one of them
 export class Drawable {
 
@@ -20,8 +22,8 @@ export class Drawable {
             // invalid but w/e
             return;
         }
-        startAmt = clamp(startAmt, 0, length);
-        endAmt = clamp(endAmt, 0, length);
+        startLength = clamp(startLength, 0, length);
+        endLength = clamp(endLength, 0, length);
         this.safeDraw(context, startLength, endLength);
     }
 

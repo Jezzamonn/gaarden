@@ -9,6 +9,7 @@ export class DrawLine extends Drawable {
      * @param {{x: number, y: number}} end 
      */
     constructor(start, end) {
+        super();
         this.start = start;
         this.end = end;
     }

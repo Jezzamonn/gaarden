@@ -4,6 +4,7 @@ import { slurp } from "../util";
 export class DrawElLipse extends Drawable {
 
     constructor(centerPoint, radii, startAngle, endAngle) {
+        super();
         this.centerPoint = centerPoint;
         this.radii = radii;
         this.startAngle = startAngle;

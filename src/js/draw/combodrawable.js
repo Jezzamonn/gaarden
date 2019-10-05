@@ -6,6 +6,7 @@ export class ComboDrawable extends Drawable {
      * @param {Array<Drawable>} drawables 
      */
     constructor(drawables) {
+        super();
         this.drawables = drawables;
     }
 

@@ -1,6 +1,7 @@
 import { sqDistBetween, multiplyPoint, addPoints, normalisePoint, clampMagnitude } from "../util";
 import Controller from "../controller";
 import { Behaviour } from "../behaviour/behaviour";
+import { Drawable } from "../draw/drawable";
 
 export class Entity {
 
@@ -23,7 +24,9 @@ export class Entity {
         this.done = false;
         this.updated = false;
         /** @type {Behaviour} */
-        this.behaviour = null
+        this.behaviour = null;
+        /** @type {Drawable} */
+        this.drawable = null;
    }
     
 	/**
@@ -71,6 +74,13 @@ export class Entity {
     }
 
     localRender(context) {
+        if (!this.drawable) {
+            this.debugRender(context);
+        }
+        this.drawable.drawAmt(context, 0, 1);
+    }
+
+    debugRender(context) {
         context.strokeStyle = 'black';
         context.lineWidth = 1;
         context.beginPath();
