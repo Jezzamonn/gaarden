@@ -160,3 +160,10 @@ export function clonePoint(point) {
 export function sqDistBetween(p1, p2) {
     return sqMagnitude(subPoints(p1, p2));
 }
+
+export function slurpPoint(p1, p2, amt) {
+    return {
+        x: slurp(p1.x, p2.x, amt),
+        y: slurp(p1.y, p2.y, amt),
+    }
+}
