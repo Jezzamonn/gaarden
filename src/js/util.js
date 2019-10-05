@@ -107,3 +107,48 @@ export function seededRandom(seed) {
     const seedFn = xmur3(seed);
     return mulberry32(seedFn());
 }
+
+
+export function normalisePoint(point) {
+    const norm = Math.sqrt(point.x * point.x + point.y * point.y);
+    return {
+        x: point.x / norm,
+        y: point.y / norm,
+    };
+}
+
+export function subPoints(p1, p2) {
+    return {
+        x: p1.x - p2.x,
+        y: p1.y - p2.y,
+    };
+}
+
+export function addPoints(p1, p2) {
+    return {
+        x: p1.x + p2.x,
+        y: p1.y + p2.y,
+    };
+}
+
+export function clampMagnitude(point, maxMagnitude) {
+    const norm = Math.sqrt(point.x * point.x + point.y * point.y);
+    if (norm < maxMagnitude) {
+        return point;
+    }
+    return {
+        x: point.x * (maxMagnitude / norm),
+        y: point.y * (maxMagnitude / norm),
+    };
+}
+
+export function multiplyPoint(scalar, point) {
+    return {
+        x: scalar * point.x,
+        y: scalar * point.y,
+    };
+}
+
+export function sqMagnitude(point) {
+    return point.x * point.x + point.y * point.y;
+}

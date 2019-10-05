@@ -11,8 +11,8 @@ export default class Controller {
 		for (let i = 0; i < 10; i++) {
 			const entity = new Tree(this);
 			entity.position = {
-				x: this.random.real(-10, 10),
-				y: this.random.real(-10, 10),
+				x: this.random.real(-100, 100),
+				y: this.random.real(-100, 100),
 			};
 			this.entities.push(entity);
 		}
@@ -27,8 +27,9 @@ export default class Controller {
 	 * @param {number} dt Time since the last frame, in seconds 
 	 */
 	update(dt) {
+		const tick = 1 / 60;
 		for (const entity of this.entities) {
-			entity.update();
+			entity.update(tick);
 		}
 	}
 

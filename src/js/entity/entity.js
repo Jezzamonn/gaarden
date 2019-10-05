@@ -9,7 +9,7 @@ export class Entity {
 	/**
 	 * Simulate time passing.
 	 */
-	update() {
+	update(dt) {
 	}
 
 	/**
