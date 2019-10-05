@@ -49,6 +49,16 @@ export default class Controller {
 		this.spawnNewEntities();
 
 		this.camera.update(dt);
+
+		// HACK for quickly debugging
+		if (this.random.bool(0.1)) {
+			this.clickRandomEntity();
+		}
+	}
+
+	clickRandomEntity() {
+		const entity = this.random.pick(this.entities);
+		this.handleGameCoordClick(entity.position);
 	}
 
 	/**
@@ -67,10 +77,13 @@ export default class Controller {
 
 	handleClick(point) {
 		const adjustedPoint = this.camera.pointToGameCoords(point);
+		this.handleGameCoordClick(adjustedPoint);
+	}
 
+	handleGameCoordClick(point) {
 		this.sortEntities();
 		for (const entity of this.entities) {
-			const handledClick = entity.checkClick(adjustedPoint);
+			const handledClick = entity.checkClick(point);
 			if (handledClick) {
 				return;
 			}
