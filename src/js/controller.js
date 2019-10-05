@@ -7,7 +7,7 @@ export default class Controller {
 		this.random = new Random(MersenneTwister19937.seed(123));
 		this.entities = [];
 		for (let i = 0; i < 10; i++) {
-			const entity = new Entity();
+			const entity = new Entity(this);
 			entity.x = this.random.real(-10, 10);
 			entity.y = this.random.real(-10, 10);
 			this.entities.push(entity);
@@ -21,7 +21,7 @@ export default class Controller {
 	 */
 	update(dt) {
 		for (const entity of this.entities) {
-			entity.update(dt);
+			entity.update();
 		}
 	}
 
