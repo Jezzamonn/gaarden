@@ -1,8 +1,17 @@
+import { Entity } from "./entity/entity";
+import { Random, MersenneTwister19937 } from "random-js";
+
 export default class Controller {
 
 	constructor() {
-		this.animAmt = 0;
-		this.period = 3;
+		this.random = new Random(MersenneTwister19937.seed(123));
+		this.entities = [];
+		for (let i = 0; i < 10; i++) {
+			const entity = new Entity();
+			entity.x = this.random.real(-10, 10);
+			entity.y = this.random.real(-10, 10);
+			this.entities.push(entity);
+		}
 	}
 
 	/**
@@ -11,8 +20,9 @@ export default class Controller {
 	 * @param {number} dt Time since the last frame, in seconds 
 	 */
 	update(dt) {
-		this.animAmt += dt / this.period;
-		this.animAmt %= 1;
+		for (const entity of this.entities) {
+			entity.update(dt);
+		}
 	}
 
 	/**
@@ -21,14 +31,9 @@ export default class Controller {
 	 * @param {!CanvasRenderingContext2D} context
 	 */
 	render(context) {
-		context.beginPath();
-		context.fillStyle = 'black';
-		context.moveTo(0, 0);
-		context.arc(0, 0, 100, 0, 2 * Math.PI * this.animAmt);
-		context.fill();
-
-		context.scale(10, 10);
-		context.fillText(this.period * this.animAmt, 0, 0);
+		for (const entity of this.entities) {
+			entity.render(context);
+		}
 	}
 
 }

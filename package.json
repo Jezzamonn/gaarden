@@ -49,5 +49,7 @@
     "webpack": "^3.11.0",
     "webpack-node-externals": "^1.7.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "random-js": "^2.1.0"
+  }
 }
