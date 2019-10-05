@@ -1,13 +1,15 @@
 import { Entity } from "./entity/entity";
 import { Random, MersenneTwister19937 } from "random-js";
+import { Tree } from "./entity/tree";
 
 export default class Controller {
 
 	constructor() {
 		this.random = new Random(MersenneTwister19937.seed(123));
+		/** @type {!Array<!Entity>} */
 		this.entities = [];
 		for (let i = 0; i < 10; i++) {
-			const entity = new Entity(this);
+			const entity = new Tree(this);
 			entity.position = {
 				x: this.random.real(-10, 10),
 				y: this.random.real(-10, 10),
@@ -45,7 +47,11 @@ export default class Controller {
 	}
 
 	handleClick(point) {
-		this.entities[0].position.x = point.x;
-		this.entities[0].position.y = point.y;
+		for (const entity of this.entities) {
+			const handledClick = entity.checkClick(point);
+			if (handledClick) {
+				return;
+			}
+		}
 	}
 }

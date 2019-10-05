@@ -34,12 +34,13 @@ export class Entity {
 
     checkClick(point) {
         if (this.touchingPoint(point)) {
-            const babie = new Entity(this.controller);
-            babie.position.x = this.x + this.controller.random.real(-10, 10);
-            babie.position.y = this.y + this.controller.random.real(-10, 10);
-            this.controller.entities.push(babie);
+            this.handleClick();
+            return true;
         }
+        return false;
     }
+
+    handleClick() {}
 
     touchingPoint(point) {
         const xDiff = point.x - this.position.x;
