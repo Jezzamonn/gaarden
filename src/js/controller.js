@@ -12,6 +12,8 @@ export default class Controller {
 			entity.y = this.random.real(-10, 10);
 			this.entities.push(entity);
 		}
+
+		this.cameraPosition = {x: 200, y: 200, scale: 0.5};
 	}
 
 	/**
@@ -31,6 +33,9 @@ export default class Controller {
 	 * @param {!CanvasRenderingContext2D} context
 	 */
 	render(context) {
+		context.translate(-this.cameraPosition.x, -this.cameraPosition.y);
+		context.scale(this.cameraPosition.scale, this.cameraPosition.scale);
+
 		for (const entity of this.entities) {
 			entity.render(context);
 		}

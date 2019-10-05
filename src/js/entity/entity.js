@@ -25,11 +25,11 @@ export class Entity {
         context.translate(this.x, this.y);
 
         context.strokeStyle = 'black';
-        context.lineWidth = 2;
+        context.lineWidth = 1;
         context.beginPath();
         context.arc(0, 0, 10, 0, 2 * Math.PI);
         context.stroke();
-        
+
         context.restore();
 	}
 
