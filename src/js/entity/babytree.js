@@ -34,11 +34,11 @@ export class BabyTree extends Entity {
         context.lineWidth = 1;
 
         context.beginPath();
-        context.moveTo(-5, -5);
-        context.lineTo(5, 5);
+        context.moveTo(-5, -3);
+        context.lineTo(5, 3);
         
-        context.moveTo(-5, 5);
-        context.lineTo(5, -5);
+        context.moveTo(-5, 3);
+        context.lineTo(5, -3);
         context.stroke();
     }
 
