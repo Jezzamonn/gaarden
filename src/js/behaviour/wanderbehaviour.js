@@ -16,6 +16,10 @@ export class WanderBehaviour extends Behaviour {
                 this.goalBehaviour = null;
             }
         }
+        else {
+            this.entity.dampen(dt);
+            this.entity.applyVelocity(dt);
+        }
 
         if (!this.goalBehaviour && this.controller.random.bool(0.03)) {
             const wanderDist = 60;
