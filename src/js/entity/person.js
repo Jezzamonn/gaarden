@@ -10,6 +10,7 @@ import { GoalBehaviour } from "../behaviour/goalbehaviour";
 import { MouseEntity } from "./mouse";
 import { Animal } from "./animal";
 import { BabyHouse } from "./babyhouse";
+import { Hopper } from "../animator/hopper";
 
 export class Person extends Entity {
 
@@ -25,8 +26,7 @@ export class Person extends Entity {
         this.goal = null;
         this.drawSpeed *= 0.3;
 
-        this.animCount = 0;
-        this.animState = null;
+        this.hopper = new Hopper(controller, this);
     }
 
     setGoal(goal) {
@@ -42,7 +42,7 @@ export class Person extends Entity {
         this.tryFollowMouse();
         this.updateGoal();
 
-        this.updateAnimations(dt);
+        this.hopper.update(dt);
     }
 
     trySpawnHouse() {
@@ -95,28 +95,11 @@ export class Person extends Entity {
         this.behaviour = new WanderBehaviour(this.controller, this)
     }
 
-    updateAnimations(dt) {
-        const sqSpeed = sqMagnitude(this.velocity);
-        if (sqSpeed > 10 * 10) {
-            this.animCount += dt;
-            this.animState = 'walking';
-        }
-        else {
-            this.animCount = 0;
-            this.animState = null;
-        }
-    }
-
     /**
-     * @param {CanvasRenderingContext2D} controller
+     * @param {CanvasRenderingContext2D} context
      */
-    localRender(controller) {
-        if (this.animState == 'walking') {
-            const jumpSpeed = 0.15;
-            let jumpAmt = (this.animCount / jumpSpeed) % 1;
-            jumpAmt = 4 * jumpAmt * (1 - jumpAmt);
-            controller.translate(0, -1.5 * jumpAmt);
-        }
-        super.localRender(controller);
+    localRender(context) {
+        this.hopper.adjustContext(context);
+        super.localRender(context);
     }
 }
