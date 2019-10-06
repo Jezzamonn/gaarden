@@ -11,6 +11,7 @@ import { TreeCluster } from "./entity/treecluster";
 import { MouseEntity } from "./entity/mouse";
 import { BabyHouse } from "./entity/babyhouse";
 import { BabyMountain } from "./entity/babymountain";
+import { Giant } from "./entity/giant";
 
 export default class Controller {
 
@@ -27,6 +28,10 @@ export default class Controller {
 		const bb = new BabyMountain(this);
 		bb.position.y = 30;
 		this.entities.push(bb);
+
+		const g = new Giant(this);
+		g.position.x = 50;
+		this.entities.push(g);
 	}
 
 	spawnInitialTree() {
