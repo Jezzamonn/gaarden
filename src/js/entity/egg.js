@@ -6,6 +6,7 @@ import { Person } from "./person";
 import { slurp, clamp } from "../util";
 import Tone from 'tone';
 import { BabyMountain } from "./babymountain";
+import { BabyPerson } from "./babyperson";
 
 const synth = new Tone.PolySynth(4, Tone.Synth, {
     oscillator : {
@@ -53,7 +54,7 @@ export class Egg extends Entity {
 
         const lastDesired = this.desiredScale;
 
-        const numPeople = this.controller.entities.filter(e => e instanceof Person && e.active).length;
+        const numPeople = this.controller.entities.filter(e => (e instanceof Person || e instanceof BabyPerson) && e.active).length;
         const extraPeople = clamp(numPeople - 1, 0, Infinity);
         this.desiredScale = 1 + 0.5 * extraPeople;
 
