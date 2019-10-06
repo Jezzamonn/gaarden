@@ -7,7 +7,7 @@ import { DrawCircle } from "../draw/drawcircle";
 import { GoalBehaviour } from "../behaviour/goalbehaviour";
 import { BabyTree } from "./babytree";
 import { Hopper } from "../animator/hopper";
-import { getPersonDrawable } from "./person";
+import { getPersonDrawable, Person } from "./person";
 
 export class BabyPerson extends Entity {
 
@@ -19,11 +19,30 @@ export class BabyPerson extends Entity {
         this.drawSpeed *= 0.6;
 
         this.hopper = new Hopper(controller, this);
+        this.goal = null;
+    }
+
+    setGoal(goal) {
+        this.goal = goal;
+        this.behaviour = new GoalBehaviour(this.controller, this);
+        this.behaviour.goal = goal;
+        this.behaviour.desiredDist = 20;
     }
 
     update(dt) {
         super.update(dt);
         this.hopper.update(dt);
+
+        if (this.goal == null && this.controller.random.bool(0.01)) {
+            this.lookForAdult();
+        }
+    }
+
+    lookForAdult() {
+        const closestPerson = this.controller.getClosestEntity(this.position, e => e instanceof Person);
+        if (closestPerson) {
+            this.setGoal(closestPerson);
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ export class GoalBehaviour extends Behaviour {
         super(controller, entity);
         this.goal = null;
         this.atGoal = false;
+        this.desiredDist = 10;
     }
 
     update(dt) {
@@ -16,7 +17,7 @@ export class GoalBehaviour extends Behaviour {
             point = this.goal.position;
         }
         const goalDiff = subPoints(point, this.entity.position);
-        if (sqMagnitude(goalDiff) < 10) {
+        if (sqMagnitude(goalDiff) < this.desiredDist * this.desiredDist) {
             this.atGoal = true;
             this.entity.dampen(dt);
         }
