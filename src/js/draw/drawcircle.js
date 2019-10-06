@@ -1,5 +1,5 @@
 import { Drawable } from "./drawable";
-import { slurp } from "../util";
+import { slurp, multiplyPoint } from "../util";
 
 export class DrawCircle extends Drawable {
 
@@ -14,6 +14,11 @@ export class DrawCircle extends Drawable {
 
     get length() {
 		return this.radius * Math.abs(this.endAngle - this.startAngle);
+    }
+
+    scale(scale) {
+        this.centerPoint = multiplyPoint(scale, this.centerPoint);
+        this.radius = scale * this.radius;
     }
 
     /**

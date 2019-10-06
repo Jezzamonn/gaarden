@@ -12,17 +12,19 @@ import { Animal } from "./animal";
 import { BabyHouse } from "./babyhouse";
 import { Hopper } from "../animator/hopper";
 
+export const getPersonDrawable = () => new ComboDrawable([
+    new DrawLine({x: -3, y: 0}, {x: -3, y: -5}),
+    new DrawLine({x: 3, y: 0}, {x: 3, y: -5}),
+    new DrawCircle({x: 0, y: -7}, 5),
+    new DrawCircle({x: 0, y: -15}, 5),
+]);
+
 export class Person extends Entity {
 
     constructor(controller) {
         super(controller);
         this.behaviour = new WanderBehaviour(controller, this);
-        this.drawable = new ComboDrawable([
-            new DrawLine({x: -3, y: 0}, {x: -3, y: -5}),
-            new DrawLine({x: 3, y: 0}, {x: 3, y: -5}),
-            new DrawCircle({x: 0, y: -7}, 5),
-            new DrawCircle({x: 0, y: -15}, 5),
-        ]);
+        this.drawable = getPersonDrawable();
         this.goal = null;
         this.drawSpeed *= 0.3;
 

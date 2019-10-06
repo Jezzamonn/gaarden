@@ -1,5 +1,5 @@
 import { Drawable } from "./drawable";
-import { slurp } from "../util";
+import { slurp, multiplyPoint } from "../util";
 
 export class DrawEllipse extends Drawable {
 
@@ -14,6 +14,11 @@ export class DrawEllipse extends Drawable {
 
     get length() {
 		return Math.min(this.radii.x, this.radii.y) * Math.abs(this.endAngle - this.startAngle);
+    }
+
+    scale(scale) {
+        this.centerPoint = multiplyPoint(scale, this.centerPoint);
+        this.radii = multiplyPoint(scale, this.radii);
     }
 
     /**

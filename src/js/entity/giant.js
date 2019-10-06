@@ -12,18 +12,15 @@ import { Animal } from "./animal";
 import { BabyHouse } from "./babyhouse";
 import { BabyTree } from "./babytree";
 import { Hopper } from "../animator/hopper";
+import { getPersonDrawable } from "./person";
 
 export class Giant extends Entity {
 
     constructor(controller) {
         super(controller);
         this.behaviour = new WanderBehaviour(controller, this);
-        this.drawable = new ComboDrawable([
-            new DrawLine({x: -6, y: 0}, {x: -6, y: -10}),
-            new DrawLine({x: 6, y: 0}, {x: 6, y: -10}),
-            new DrawCircle({x: 0, y: -14}, 10),
-            new DrawCircle({x: 0, y: -30}, 10),
-        ]);
+        this.drawable = getPersonDrawable();
+        this.drawable.scale(2);
         this.goal = null;
         this.drawSpeed *= 0.3;
 

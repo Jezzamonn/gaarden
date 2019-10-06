@@ -1,5 +1,5 @@
 import { Drawable } from "./drawable";
-import { sqDistBetween, slurp, slurpPoint, clamp } from "../util";
+import { sqDistBetween, slurp, slurpPoint, clamp, multiplyPoint } from "../util";
 
 export class DrawLine extends Drawable {
 
@@ -16,6 +16,11 @@ export class DrawLine extends Drawable {
 
     get length() {
         return Math.sqrt(sqDistBetween(this.start, this.end));
+    }
+
+    scale(scale) {
+        this.start = multiplyPoint(scale, this.start);
+        this.end = multiplyPoint(scale, this.end);
     }
 
     /**

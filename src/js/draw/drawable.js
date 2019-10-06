@@ -7,6 +7,8 @@ export class Drawable {
         return 0;
     }
 
+    scale(scale) {}
+
     /**
      * @param {CanvasRenderingContext2D} context 
      */

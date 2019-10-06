@@ -13,6 +13,12 @@ export class ComboDrawable extends Drawable {
     get length() {
         return this.drawables.map(d => d.length).reduce((a, b) => a + b, 0);
     }
+    
+    scale(scale) {
+        for (const drawable of this.drawables) {
+            drawable.scale(scale);
+        }
+    }
 
     safeDraw(context, startLength, endLength) {
         for (const drawable of this.drawables) {
