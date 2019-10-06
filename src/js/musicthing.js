@@ -11,16 +11,16 @@ export class MusicThing {
         this.count = 0;
         this.synth = new Tone.PolySynth(4, Tone.Synth, {
 			"oscillator" : {
-				"type" : "amtriangle",
-				"harmonicity" : 1,
-				"modulationType" : "square"
+				"type" : "sine",
 			},
 			"envelope" : {
-				"attackCurve" : "exponential",
-				"attack" : 0.1,
-				"decay" : 0.2,
-				"sustain" : 0.2,
-				"release" : 1.5,
+				"attackCurve" : "linear",
+				"attack" : 0.01,
+				"decay" : 0.1,
+                'decayCurve': 'exponential',
+				"sustain" : 0.1,
+                "release" : 1.20,
+                'releaseCurve': 'exponential',
 			},
 			"portamento" : 0
 		}).toMaster();
