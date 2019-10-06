@@ -22,17 +22,11 @@ export default class Controller {
 
 		this.spawnInitialTree();
 		this.entities.push(new MouseEntity(this));
-
-		this.entities.push(new BabyHouse(this));
 	}
 
 	spawnInitialTree() {
 		const cluster = new TreeCluster(this);
 		const entity = new BabyTree(this, cluster);
-		entity.position = {
-			x: this.random.real(-100, 100),
-			y: this.random.real(-100, 100),
-		};
 		this.entities.push(entity, cluster);
 	}
 
