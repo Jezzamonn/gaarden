@@ -25,7 +25,7 @@ const synth = new Tone.PolySynth(4, Tone.Synth, {
     volume: -6,
 }).toMaster();
 
-const notes = ['c4', 'd4', 'e4', 'g4', 'a4'];
+const notes = ['c4', 'e4', 'g4', 'a4'];
 
 export class Tree extends Entity {
 
