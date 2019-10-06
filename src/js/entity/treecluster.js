@@ -17,7 +17,7 @@ export class TreeCluster extends Entity {
     }
 
     spawnNextEntity(spawningEntity) {
-        const treesInCluster = this.controller.entities.filter(e => e instanceof Tree && e.cluster === this);
+        const treesInCluster = this.controller.entities.filter(e => e instanceof Tree && e.cluster === this && e.active);
         const justInFront = {
             x: spawningEntity.position.x,
             y: spawningEntity.position.y + 0.1,
@@ -69,7 +69,9 @@ export class TreeCluster extends Entity {
 
 	trySpawnBabyTrees() {
 		let numBabyTrees = this.controller.entities.filter(e => e instanceof BabyTree && e.cluster === this).length;
-		const trees = this.controller.entities.filter(e => e instanceof Tree && e.cluster === this);
+        const trees = this.controller.entities.filter(e => e instanceof Tree && e.cluster === this);
+        // add the growing trees in the bb count
+        numBabyTrees += trees.filter(t => !t.active).length;
 		
 		let wantedBabies = 0;
 		if (trees.length == 0) {

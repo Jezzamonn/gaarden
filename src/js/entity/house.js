@@ -18,7 +18,7 @@ const synth = new Tone.Synth(
     presets[4],
 ).toMaster();
 
-const notes = ['c4', 'e4', 'g4', 'a4'];
+const notes = ['g3', 'a3', 'c4', 'e4'];
 
 export class House extends Entity {
     constructor(controller) {

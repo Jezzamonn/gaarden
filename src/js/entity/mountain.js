@@ -46,7 +46,11 @@ export class Mountain extends Entity {
                 synth.triggerAttackRelease(note, '1n');
                 setTimeout(() => synth.releaseAll(), 2000);
             }
+        }
+    }
 
+    firstActiveUpdate() {
+        if (this.center) {
             const giant = new Giant(this.controller);
             giant.position.x = this.position.x;
             giant.position.y = this.position.y + 1;

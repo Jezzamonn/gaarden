@@ -35,12 +35,16 @@ export class Entity {
 	 * Simulate time passing.
 	 */
 	update(dt) {
+        const startActive = this.active;
         this.drawnAmt += this.drawSpeed * dt;
-        if (this.drawable && this.drawnAmt > this.drawable.length) {
-            this.active = true;
+        if (!this.active) {
+            if (this.drawable && this.drawnAmt > this.drawable.length) {
+                this.active = true;
+            }
         }
-        else {
-            this.active = true;
+
+        if (!startActive && this.active) {
+            this.firstActiveUpdate();
         }
 
         if (!this.updated) {
@@ -48,13 +52,14 @@ export class Entity {
             this.updated = true;
         }
 
-        if (this.behaviour) {
+        if (this.active && this.behaviour) {
             this.behaviour.update(dt);
         }
     }
 
     firstUpdate() {}
 
+    firstActiveUpdate() {}
 
     accelInDir(direction, dt) {
         const accelVec = multiplyPoint(this.accel, normalisePoint(direction));

@@ -50,10 +50,12 @@ export class Tree extends Entity {
     }
 
     firstUpdate() {
-        this.cluster.spawnNextEntity(this);
-
         const note = this.controller.random.pick(notes);
         synth.triggerAttackRelease(note, '16n');
+    }
+
+    firstActiveUpdate() {
+        this.cluster.spawnNextEntity(this);
     }
 
     /**
