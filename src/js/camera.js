@@ -33,7 +33,7 @@ export class Camera {
     }
 
     showAll() {
-        const entities = this.controller.entities.filter(e => (!e instanceof MouseEntity));
+        const entities = this.controller.entities.filter(e => !(e instanceof MouseEntity));
         if (entities.length == 0) {
             return;
         }

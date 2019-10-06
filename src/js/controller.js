@@ -8,6 +8,7 @@ import { House } from "./entity/house";
 import { Egg } from "./entity/egg";
 import { Camera } from "./camera";
 import { TreeCluster } from "./entity/treecluster";
+import { MouseEntity } from "./entity/mouse";
 
 export default class Controller {
 
@@ -19,6 +20,7 @@ export default class Controller {
 		this.camera = new Camera(this);
 
 		this.spawnInitialTree();
+		this.entities.push(new MouseEntity(this));
 	}
 
 	spawnInitialTree() {
@@ -144,6 +146,12 @@ export default class Controller {
 				const egg = new Egg(this);
 				egg.position = eggPoint;
 				this.entities.push(egg);
+
+				// Now all the people want to see the egg!
+				const people = this.entities.filter(e => e instanceof Person);
+				for (const person of people) {
+					person.setGoal(egg);
+				}
 				break;
 			}
 		}

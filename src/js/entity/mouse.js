@@ -56,7 +56,9 @@ export class MouseEntity extends Entity {
     }
 
     handleMouseMove(point, mouseDown = false) {
-        this.desiredPosition = point;
+        if (mouseDown) {
+            this.desiredPosition = point;
+        }
         this.mouseDown = mouseDown;
     }
 }

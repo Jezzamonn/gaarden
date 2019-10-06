@@ -1,5 +1,6 @@
 import { Behaviour } from "./behaviour"
 import { sqMagnitude, subPoints } from "../util";
+import { Entity } from "../entity/entity";
 
 export class GoalBehaviour extends Behaviour {
 
@@ -10,7 +11,11 @@ export class GoalBehaviour extends Behaviour {
     }
 
     update(dt) {
-        const goalDiff = subPoints(this.goal, this.entity.position);
+        let point = this.goal;
+        if (this.goal instanceof Entity) {
+            point = this.goal.position;
+        }
+        const goalDiff = subPoints(point, this.entity.position);
         if (sqMagnitude(goalDiff) < 10) {
             this.atGoal = true;
             this.entity.dampen(dt);

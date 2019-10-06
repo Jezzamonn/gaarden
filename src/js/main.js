@@ -22,14 +22,16 @@ function init() {
 	// Kick off the update loop
 	window.requestAnimationFrame(everyFrame);
 
-	document.addEventListener('mousedown', () => mouseDown = true);
-	document.addEventListener('mouseup', () => mouseDown = false);
-	document.addEventListener('mousedown', (evt) => handleClick(evt));
-	document.addEventListener('mousemove', (evt) => {
-		if (mouseDown) {
-			handleClick(evt);
-		}
+	document.addEventListener('mousedown', (evt) => {
+		mouseDown = true;
+		handleClick(evt);
+		handleMouseMove(evt)
 	});
+	document.addEventListener('mouseup', (evt) => {
+		mouseDown = false;
+		handleMouseMove(evt);
+	});
+	document.addEventListener('mousemove', handleMouseMove);
 }
 
 // TODO: Make tweak this to allow frame skipping for slow computers. Maybe.
