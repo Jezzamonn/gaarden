@@ -25,6 +25,8 @@ const synth = new Tone.PolySynth(4, Tone.Synth, {
 
 const notes = ['c3', 'e3', 'g3'];
 
+window.synth = synth;
+
 export class Mountain extends Entity {
     constructor(controller) {
         super(controller);
@@ -35,5 +37,6 @@ export class Mountain extends Entity {
     firstUpdate() {
         const note = this.controller.random.pick(notes);
         synth.triggerAttackRelease(note, '1n');
+        setTimeout(() => synth.releaseAll(), 2000);
     }
 }
