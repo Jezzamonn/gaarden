@@ -7,7 +7,7 @@ export class DrawPoly extends ComboDrawable {
     /**
      * @param {Array<{x: number, y: number}>} points 
      */
-    constructor(points, {closed = true}) {
+    constructor(points, {closed = true, fill = true} = {}) {
         const lines = [];
         for (let i = 0; i < points.length - 1; i++) {
             const line = new DrawLine(points[i], points[i+1]);
@@ -21,6 +21,27 @@ export class DrawPoly extends ComboDrawable {
 
         this.points = points;
         this.closed = closed;
+        this.fill = fill;
+    }
+
+    /**
+     * @param {CanvasRenderingContext2D} context 
+     */
+    safeDraw(context, startLength, endLength) {
+        if (this.fill) {
+            context.beginPath();
+            context.fillStyle = 'white';
+            for (let i = 0; i < this.points.length; i++) {
+                if (i == 0) {
+                    context.moveTo(this.points[i].x, this.points[i].y);
+                }
+                else {
+                    context.lineTo(this.points[i].x, this.points[i].y);
+                }
+            }
+            context.fill();
+        }
+        super.safeDraw(context, startLength, endLength);
     }
 
 }

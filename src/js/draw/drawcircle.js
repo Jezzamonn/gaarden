@@ -3,12 +3,13 @@ import { slurp } from "../util";
 
 export class DrawCircle extends Drawable {
 
-    constructor(centerPoint, radius, startAngle = 0, endAngle = 2 * Math.PI) {
+    constructor(centerPoint, radius, startAngle = 0, endAngle = 2 * Math.PI, { fill = true} = {}) {
         super();
         this.centerPoint = centerPoint;
         this.radius = radius;
         this.startAngle = startAngle;
         this.endAngle = endAngle;
+        this.fill = fill;
     }
 
     get length() {
@@ -23,9 +24,13 @@ export class DrawCircle extends Drawable {
         const e = slurp(this.startAngle, this.endAngle, endAmt);
         
         context.strokeStyle = 'black';
+        context.fillStyle = 'white';
         context.lineWidth = 1;
         context.beginPath();
         context.arc(this.centerPoint.x, this.centerPoint.y, this.radius, s, e);
+        if  (this.fill) {
+            context.fill();
+        }
         context.stroke();
     }
 }
