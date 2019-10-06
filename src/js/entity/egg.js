@@ -47,9 +47,13 @@ export class Egg extends Entity {
     update(dt) {
         super.update(dt);
 
+        if (!this.active) {
+            return;
+        }
+
         const lastDesired = this.desiredScale;
 
-        const numPeople = this.controller.entities.filter(e => e instanceof Person).length;
+        const numPeople = this.controller.entities.filter(e => e instanceof Person && e.active).length;
         const extraPeople = clamp(numPeople - 1, 0, Infinity);
         this.desiredScale = 1 + 0.5 * extraPeople;
 
@@ -66,7 +70,7 @@ export class Egg extends Entity {
             synth.triggerAttackRelease(note, '1n');
             setTimeout(() => synth.releaseAll(), 3000);
 
-            if (true) { //numPeople > 3 && numPeople % 3 == 0) {
+            if (numPeople > 3 && numPeople % 2 == 0) {
                 const bb = new BabyMountain(this.controller);
                 let dist = 100;
                 let point = null;

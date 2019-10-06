@@ -139,7 +139,7 @@ export default class Controller {
 		if (eggs.length >= 1) {
 			return;
 		}
-		const houses = this.entities.filter(e => e instanceof House);
+		const houses = this.entities.filter(e => e instanceof House && e.active);
 		
 		if (houses.length >= 2) {
 			for (let i = 0; i < 5; i++) {
