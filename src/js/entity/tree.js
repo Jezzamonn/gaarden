@@ -4,6 +4,28 @@ import { clonePoint } from "../util";
 import { Animal } from "./animal";
 import { TreeCluster } from "./treecluster";
 import { DrawPoly } from "../draw/drawpoly";
+import Tone from 'tone';
+
+const synth = new Tone.PolySynth(4, Tone.Synth, {
+    oscillator : {
+        type : 'amsawtooth',
+        partialCount : 5,
+        modulationType: 'square',
+        harmonicity: 1,
+    },
+    envelope : {
+        attackCurve : 'linear',
+        attack : 0.10,
+        decay : 0,
+        sustain : 1,
+        release : 2.5,
+        releaseCurve: 'exponential',
+    },
+    portamento : 0,
+    volume: -6,
+}).toMaster();
+
+const notes = ['c4', 'd4', 'e4', 'g4', 'a4'];
 
 export class Tree extends Entity {
 
@@ -29,6 +51,9 @@ export class Tree extends Entity {
 
     firstUpdate() {
         this.cluster.spawnNextEntity(this);
+
+        const note = this.controller.random.pick(notes);
+        synth.triggerAttackRelease(note, '16n');
     }
 
     /**

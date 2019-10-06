@@ -22,17 +22,18 @@ export class MusicThing {
                 "release" : 1.20,
                 'releaseCurve': 'exponential',
 			},
-			"portamento" : 0
+            "portamento" : 0,
 		}).toMaster();
     }
 
     update(dt) {
-        const notes = ['c5', 'd5', 'e5', 'g5', 'a5'];
-        if (this.controller.random.bool(0.01)) {
-            const note = this.controller.random.pick(notes);
-            this.synth.triggerAttackRelease(note, '4n');
-        }
     }
+
+    playNote() {
+        const notes = ['c5', 'd5', 'e5', 'g5', 'a5'];
+        const note = this.controller.random.pick(notes);
+        this.synth.triggerAttackRelease(note, '4n');
+}
 
 
 }
