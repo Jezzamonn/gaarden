@@ -16,10 +16,12 @@ export class Entity {
         this.maxSpeed = 20;
         this.accel = 20;
         this.damp = 0.9;
+        this.drawSpeed = 100;
 
         // State
         this.position = {x: 0, y: 0};
         this.velocity = {x: 0, y: 0};
+        this.drawnAmt = 0;
         this.active = true;
         this.done = false;
         this.updated = false;
@@ -33,6 +35,7 @@ export class Entity {
 	 * Simulate time passing.
 	 */
 	update(dt) {
+        this.drawnAmt += this.drawSpeed * dt;
         if (!this.updated) {
             this.firstUpdate();
             this.updated = true;
@@ -77,7 +80,7 @@ export class Entity {
         if (!this.drawable) {
             this.debugRender(context);
         }
-        this.drawable.drawAmt(context, 0, 1);
+        this.drawable.draw(context, 0, this.drawnAmt);
     }
 
     debugRender(context) {
