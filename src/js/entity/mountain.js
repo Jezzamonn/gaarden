@@ -47,10 +47,13 @@ export class Mountain extends Entity {
                 setTimeout(() => synth.releaseAll(), 2000);
             }
 
-            const giant = new Giant(this.controller);
-            giant.position.x = this.position.x;
-            giant.position.y = this.position.y + 1;
-            this.controller.newEntities.push(giant);
+            const mountains = this.controller.entities.filter(e => e instanceof Mountain);
+            if (mountains.length % 6 == 0) {
+                const giant = new Giant(this.controller);
+                giant.position.x = this.position.x;
+                giant.position.y = this.position.y + 1;
+                this.controller.newEntities.push(giant);
+            }
         }
     }
 }

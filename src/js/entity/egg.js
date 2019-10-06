@@ -64,8 +64,9 @@ export class Egg extends Entity {
         if (lastDesired != this.desiredScale) {
             const note = this.controller.random.pick(notes);
             synth.triggerAttackRelease(note, '1n');
+            setTimeout(() => synth.releaseAll(), 3000);
 
-            if (numPeople > 3 && numPeople % 3 == 0) {
+            if (true) { //numPeople > 3 && numPeople % 3 == 0) {
                 const bb = new BabyMountain(this.controller);
                 let dist = 100;
                 let point = null;
@@ -77,6 +78,27 @@ export class Egg extends Entity {
                 bb.position = point;
                 this.controller.newEntities.push(bb);
             }
+        }
+    }
+
+    touchingPoint(point) {
+        const xDiff = point.x - this.position.x;
+        const yDiff = point.y - (this.position.y - 10 * this.desiredScale); 
+        const sqDist = (xDiff * xDiff + yDiff * yDiff);
+        return sqDist < 12 * 12 * this.desiredScale * this.desiredScale
+    }
+
+       handleClick() {
+        // ALL PEOPLE GO TO THE EGG
+        const note = this.controller.random.pick(notes);
+        synth.triggerAttackRelease(note, '1n');
+        setTimeout(() => synth.releaseAll(), 3000);
+
+        const people = this.controller.entities.filter(e => e instanceof Person);
+        for (const person of people) {
+            // EGG
+            person.setGoal(this);
+            person.behaviour.desiredDist = 20 * this.desiredScale;
         }
     }
 }
