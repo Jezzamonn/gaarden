@@ -1,4 +1,5 @@
 import Controller from './controller.js';
+import Tone from 'tone';
 
 let canvas = document.getElementById('canvas');
 /** @type {!CanvasRenderingContext2D} */
@@ -25,13 +26,18 @@ function init() {
 	document.addEventListener('mousedown', (evt) => {
 		mouseDown = true;
 		handleClick(evt);
-		handleMouseMove(evt)
+		handleMouseMove(evt);
+		if (Tone.context.state !== 'running') {
+			Tone.context.resume();
+		}
 	});
 	document.addEventListener('mouseup', (evt) => {
 		mouseDown = false;
 		handleMouseMove(evt);
 	});
 	document.addEventListener('mousemove', handleMouseMove);
+	
+	window.Tone = Tone;
 }
 
 // TODO: Make tweak this to allow frame skipping for slow computers. Maybe.
