@@ -86,8 +86,13 @@ export class Person extends Entity {
         }
 
         if (this.goal) {
+            if (!(this.behaviour instanceof GoalBehaviour)) {
+                // what?
+                this.goBackToWandering();
+            }
+
             const sqGoalDist = sqDistBetween(this.goal.position, this.position);
-            if (sqGoalDist < 10 * 10) {
+            if (sqGoalDist < 1.1 * 1.1 * this.behaviour.desiredDist * this.behaviour.desiredDist) {
                 this.goBackToWandering();
             }
         }
