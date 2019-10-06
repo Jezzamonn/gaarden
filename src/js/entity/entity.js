@@ -22,7 +22,7 @@ export class Entity {
         this.position = {x: 0, y: 0};
         this.velocity = {x: 0, y: 0};
         this.drawnAmt = 0;
-        this.active = true;
+        this.active = false;
         this.done = false;
         this.updated = false;
         /** @type {Behaviour} */
@@ -36,6 +36,13 @@ export class Entity {
 	 */
 	update(dt) {
         this.drawnAmt += this.drawSpeed * dt;
+        if (this.drawable && this.drawnAmt > this.drawable.length) {
+            this.active = true;
+        }
+        else {
+            this.active = true;
+        }
+
         if (!this.updated) {
             this.firstUpdate();
             this.updated = true;
@@ -93,6 +100,9 @@ export class Entity {
     }
 
     checkClick(point) {
+        if (!this.active) {
+            return false;
+        }
         if (this.touchingPoint(point)) {
             return this.handleClick();
         }

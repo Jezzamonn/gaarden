@@ -18,13 +18,13 @@ export class TreeCluster extends Entity {
 
     spawnNextEntity(spawningEntity) {
         const treesInCluster = this.controller.entities.filter(e => e instanceof Tree && e.cluster === this);
-        const justBehind = {
+        const justInFront = {
             x: spawningEntity.position.x,
-            y: spawningEntity.position.y - 0.1,
+            y: spawningEntity.position.y + 0.1,
         };
         if (treesInCluster.length == 4) {
             const person = new Person(this.controller);
-            person.position = justBehind;
+            person.position = justInFront;
             this.controller.newEntities.push(person);
             return;
         }
@@ -61,7 +61,7 @@ export class TreeCluster extends Entity {
         }
         if (treesInCluster.length % 4 == 0) {
             const animal = new Animal(this.controller);
-            animal.position = justBehind;
+            animal.position = justInFront;
             this.controller.newEntities.push(animal);
             return;
         }
