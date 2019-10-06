@@ -60,7 +60,7 @@ export class Tree extends Entity {
      * @param {CanvasRenderingContext2D} context 
      */
     localRender(context) {
-        const wind = 0.02 * Math.sin(2 * Math.PI * this.windCount / this.windSpeed);
+        const wind = 0.03 * Math.sin(2 * Math.PI * this.windCount / this.windSpeed);
         context.transform(1, 0, wind, 1, 0, 0);
         super.localRender(context);
     }

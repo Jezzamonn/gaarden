@@ -2,7 +2,7 @@ import { Entity } from "./entity/entity";
 import { Random, MersenneTwister19937 } from "random-js";
 import { Tree } from "./entity/tree";
 import { BabyTree } from "./entity/babytree";
-import { sqDistBetween } from "./util";
+import { sqDistBetween, slurpPoint } from "./util";
 import { Person } from "./entity/person";
 import { House } from "./entity/house";
 import { Egg } from "./entity/egg";
@@ -52,6 +52,7 @@ export default class Controller {
 		this.entities = this.entities.filter(e => !e.done);
 
 		this.spawnNewEntities();
+		this.makeThePeopleWantToHaveBabies();
 
 		this.camera.update(dt);
 
@@ -163,6 +164,28 @@ export default class Controller {
 	}
 
 	makeThePeopleWantToHaveBabies() {
+		if (this.random.bool(0.99)) {
+			return;
+		}
+		const unchildedPeople = this.entities.filter(e => e instanceof Person && !e.childed && e.goal == null)
+		if (unchildedPeople.length >= 2) {
+			const r1 = this.random.integer(0, unchildedPeople.length - 1);
+			let r2 = this.random.integer(0, unchildedPeople.length - 2);
+			if (r2 >= r1) {
+				r2++;
+			}
 
+			const p1 = unchildedPeople[r1];
+			const p2 = unchildedPeople[r2];
+			const midPoint = slurpPoint(p1.position, p2.position, 0.5);
+			
+			const house = this.getClosestEntity(midPoint, e => e instanceof House);
+			if (house == null) {
+				return;
+			}
+
+			p1.setGoal(house);
+			p2.setGoal(house);
+		}
 	}
 }

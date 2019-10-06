@@ -11,6 +11,7 @@ import { MouseEntity } from "./mouse";
 import { Animal } from "./animal";
 import { BabyHouse } from "./babyhouse";
 import { Hopper } from "../animator/hopper";
+import { BabyPerson } from "./babyperson";
 
 export const getPersonDrawable = () => new ComboDrawable([
     new DrawLine({x: -3, y: 0}, {x: -3, y: -5}),
@@ -93,6 +94,31 @@ export class Person extends Entity {
 
             const sqGoalDist = sqDistBetween(this.goal.position, this.position);
             if (sqGoalDist < 1.1 * 1.1 * this.behaviour.desiredDist * this.behaviour.desiredDist) {
+                if (this.goal instanceof House) {
+                    const otherPerson = this.controller.getClosestEntity(this.goal.position, e => (
+                        e instanceof Person &&
+                        e !== this &&
+                        e.goal == this.goal &&
+                        !e.childed
+                    ))
+                    let otherPersonDist = 0;
+                    if (otherPerson) {
+                        otherPersonDist = sqDistBetween(this.position, otherPerson.position);
+                    }
+                    if (otherPerson && otherPersonDist < 20 * 20) {
+                        this.childed = true;
+                        otherPerson.childed = true;
+                        const bb = new BabyPerson(this.controller);
+                        bb.position = clonePoint(this.goal.position);
+                        this.controller.newEntities.push(bb);
+                        return;
+                    }
+                    // Wait for a bit for the other one to catch up, but not forever
+                    else if (this.controller.random.bool(0.01)) {
+                        return;
+                    }
+                }
+    
                 this.goBackToWandering();
             }
         }
