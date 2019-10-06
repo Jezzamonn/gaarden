@@ -13,6 +13,7 @@ import { BabyHouse } from "./entity/babyhouse";
 import { BabyMountain } from "./entity/babymountain";
 import { Giant } from "./entity/giant";
 import { BabyPerson } from "./entity/babyperson";
+import { MusicThing } from "./musicthing";
 
 export default class Controller {
 
@@ -37,6 +38,8 @@ export default class Controller {
 		const b = new BabyPerson(this);
 		b.position.x = -70;
 		this.entities.push(b);
+
+		this.musicThing = new MusicThing(this);
 	}
 
 	spawnInitialTree() {
@@ -68,6 +71,8 @@ export default class Controller {
 		if (this.random.bool(0.1)) {
 			// this.clickRandomEntity();
 		}
+
+		this.musicThing.update(dt);
 	}
 
 	clickRandomEntity() {

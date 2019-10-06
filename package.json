@@ -50,6 +50,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "random-js": "^2.1.0"
+    "random-js": "^2.1.0",
+    "tone": "^13.8.25"
   }
 }
