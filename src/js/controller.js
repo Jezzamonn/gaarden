@@ -9,6 +9,7 @@ import { Egg } from "./entity/egg";
 import { Camera } from "./camera";
 import { TreeCluster } from "./entity/treecluster";
 import { MouseEntity } from "./entity/mouse";
+import { BabyHouse } from "./entity/babyhouse";
 
 export default class Controller {
 
@@ -21,6 +22,8 @@ export default class Controller {
 
 		this.spawnInitialTree();
 		this.entities.push(new MouseEntity(this));
+
+		this.entities.push(new BabyHouse(this));
 	}
 
 	spawnInitialTree() {

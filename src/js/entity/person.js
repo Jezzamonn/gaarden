@@ -9,6 +9,7 @@ import { Tree } from "./tree";
 import { GoalBehaviour } from "../behaviour/goalbehaviour";
 import { MouseEntity } from "./mouse";
 import { Animal } from "./animal";
+import { BabyHouse } from "./babyhouse";
 
 export class Person extends Entity {
 
@@ -58,7 +59,7 @@ export class Person extends Entity {
             if (treeSqDist > 100 * 100) {
                 return;
             }
-            const house = new House(this.controller);
+            const house = new BabyHouse(this.controller);
             house.position = clonePoint(this.position);
             this.controller.newEntities.push(house);
         }
