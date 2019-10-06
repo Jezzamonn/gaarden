@@ -58,7 +58,7 @@ export default class Controller {
 
 		// HACK for quickly debugging
 		if (this.random.bool(0.1)) {
-			// this.clickRandomEntity();
+			this.clickRandomEntity();
 		}
 
 		this.musicThing.update(dt);
