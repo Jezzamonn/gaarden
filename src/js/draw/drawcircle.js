@@ -3,7 +3,7 @@ import { slurp } from "../util";
 
 export class DrawCircle extends Drawable {
 
-    constructor(centerPoint, radius, startAngle, endAngle) {
+    constructor(centerPoint, radius, startAngle = 0, endAngle = 2 * Math.PI) {
         super();
         this.centerPoint = centerPoint;
         this.radius = radius;

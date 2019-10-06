@@ -2,6 +2,8 @@ import { Entity } from "./entity";
 import { Tree } from "./tree";
 import { TreeCluster } from "./treecluster";
 import Controller from "../controller";
+import { ComboDrawable } from "../draw/combodrawable";
+import { DrawLine } from "../draw/drawline";
 
 export class BabyTree extends Entity {
 
@@ -16,6 +18,10 @@ export class BabyTree extends Entity {
             throw new Error('null cluster >:(');
         }
         this.cluster = cluster;
+        this.drawable = new ComboDrawable([
+            new DrawLine({x: -5, y: -3}, {x: 5, y: 3}),
+            new DrawLine({x: -5, y: 3}, {x: 5, y: -3}),
+        ]);
     }
 
     handleClick() {
@@ -24,22 +30,6 @@ export class BabyTree extends Entity {
         this.controller.newEntities.push(tree);
         this.done = true;
         return true;
-    }
-
-    /**
-     * @param {CanvasRenderingContext2D} context 
-     */
-    localRender(context) {
-        context.strokeStyle = 'black';
-        context.lineWidth = 1;
-
-        context.beginPath();
-        context.moveTo(-5, -3);
-        context.lineTo(5, 3);
-        
-        context.moveTo(-5, 3);
-        context.lineTo(5, -3);
-        context.stroke();
     }
 
 }

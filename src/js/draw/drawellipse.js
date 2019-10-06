@@ -1,9 +1,9 @@
 import { Drawable } from "./drawable";
 import { slurp } from "../util";
 
-export class DrawElLipse extends Drawable {
+export class DrawEllipse extends Drawable {
 
-    constructor(centerPoint, radii, startAngle, endAngle) {
+    constructor(centerPoint, radii, startAngle = 0, endAngle = 2 * Math.PI) {
         super();
         this.centerPoint = centerPoint;
         this.radii = radii;
