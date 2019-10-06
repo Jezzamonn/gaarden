@@ -90,6 +90,17 @@ export default class Controller {
 		}
 	}
 
+	handleMouseMove(point, mouseDown) {
+		const adjustedPoint = this.camera.pointToGameCoords(point);
+		this.handleGameCoordMouseMove(adjustedPoint, mouseDown);
+	}
+
+	handleGameCoordMouseMove(point, mouseDown) {
+		for (const entity of this.entities) {
+			entity.handleMouseMove(point, mouseDown);
+		}
+	}
+
 	sortEntities() {
 		this.entities.sort((a, b) => a.position.y - b.position.y);
 	}

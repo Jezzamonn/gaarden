@@ -5,6 +5,7 @@ import { House } from "./house";
 import { ComboDrawable } from "../draw/combodrawable";
 import { DrawLine } from "../draw/drawline";
 import { DrawCircle } from "../draw/drawcircle";
+import { Tree } from "./tree";
 
 export class Person extends Entity {
 
@@ -24,11 +25,20 @@ export class Person extends Entity {
         if (this.controller.random.bool(0.1)) {
             const nearest = this.controller.getClosestEntity(this.position, e => e !== this);
             const sqDist = sqDistBetween(this.position, nearest.position);
-            if (sqDist > 50 * 50) {
-                const house = new House(this.controller);
-                house.position = clonePoint(this.position);
-                this.controller.newEntities.push(house);
+            if (sqDist < 50 * 50) {
+                return;
             }
+            const nearestTree = this.controller.getClosestEntity(this.position, e => e instanceof Tree);
+            if (nearestTree == null) {
+                return;
+            }
+            const treeSqDist = sqDistBetween(this.position, nearestTree.position);
+            if (treeSqDist > 70 * 70) {
+                return;
+            }
+            const house = new House(this.controller);
+            house.position = clonePoint(this.position);
+            this.controller.newEntities.push(house);
         }
     }
 

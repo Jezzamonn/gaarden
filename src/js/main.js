@@ -10,6 +10,7 @@ const SIZE = 500;
 let scale = 1;
 let lastTime;
 let controller;
+let mouseDown = false;
 
 function init() {
 	lastTime = Date.now();
@@ -21,7 +22,14 @@ function init() {
 	// Kick off the update loop
 	window.requestAnimationFrame(everyFrame);
 
-	document.addEventListener('mouseup', handleClick);
+	document.addEventListener('mousedown', () => mouseDown = true);
+	document.addEventListener('mouseup', () => mouseDown = false);
+	document.addEventListener('mousedown', (evt) => handleClick(evt));
+	document.addEventListener('mousemove', (evt) => {
+		if (mouseDown) {
+			handleClick(evt);
+		}
+	});
 }
 
 // TODO: Make tweak this to allow frame skipping for slow computers. Maybe.
@@ -60,6 +68,14 @@ function handleClick(event) {
 		x: (event.clientX - window.innerWidth / 2) / (scale / pixelRatio),
 		y: (event.clientY - window.innerHeight / 2) / (scale / pixelRatio),
 	});
+}
+
+function handleMouseMove(event) {
+	const pixelRatio = window.devicePixelRatio || 1;
+	controller.handleMouseMove({
+		x: (event.clientX - window.innerWidth / 2) / (scale / pixelRatio),
+		y: (event.clientY - window.innerHeight / 2) / (scale / pixelRatio),
+	}, mouseDown);
 }
 
 function handleResize(evt) {

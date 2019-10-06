@@ -1,5 +1,6 @@
 import Controller from "./controller";
 import { clonePoint, slurp, experp } from "./util";
+import { MouseEntity } from "./entity/mouse";
 
 const DEFAULT_SIZE = 500;
 
@@ -32,14 +33,15 @@ export class Camera {
     }
 
     showAll() {
-        if (this.controller.entities.length == 0) {
+        const entities = this.controller.entities.filter(e => (!e instanceof MouseEntity));
+        if (entities.length == 0) {
             return;
         }
 
-        let top = clonePoint(this.controller.entities[0].position);
-        let bottom = clonePoint(this.controller.entities[0].position);
+        let top = clonePoint(entities[0].position);
+        let bottom = clonePoint(entities[0].position);
 
-        for (const entity of this.controller.entities) {
+        for (const entity of entities) {
             if (entity.position.x < top.x) {
                 top.x = entity.position.x;
             }

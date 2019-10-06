@@ -86,6 +86,7 @@ export class Entity {
     localRender(context) {
         if (!this.drawable) {
             this.debugRender(context);
+            return;
         }
         this.drawable.draw(context, 0, this.drawnAmt);
     }
@@ -98,6 +99,8 @@ export class Entity {
         context.stroke();
         context.fillText(this.debugName, 0, 0)
     }
+
+    handleMouseMove(point) {}
 
     checkClick(point) {
         if (!this.active) {
