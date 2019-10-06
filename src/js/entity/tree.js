@@ -22,4 +22,12 @@ export class Tree extends Entity {
         this.cluster.spawnNextEntity(this);
     }
 
+    /**
+     * @param {CanvasRenderingContext2D} context 
+     */
+    localRender(context) {
+        context.transform(1, 0, this.controller.random.real(-0.1, 0.1), 1, 0, 0);
+        super.localRender(context);
+    }
+
 }
