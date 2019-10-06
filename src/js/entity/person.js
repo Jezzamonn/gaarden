@@ -23,6 +23,7 @@ export class Person extends Entity {
             new DrawCircle({x: 0, y: -15}, 5),
         ]);
         this.goal = null;
+        this.drawSpeed *= 0.3;
 
         this.animCount = 0;
         this.animState = null;

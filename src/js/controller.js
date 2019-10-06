@@ -10,6 +10,7 @@ import { Camera } from "./camera";
 import { TreeCluster } from "./entity/treecluster";
 import { MouseEntity } from "./entity/mouse";
 import { BabyHouse } from "./entity/babyhouse";
+import { BabyMountain } from "./entity/babymountain";
 
 export default class Controller {
 
@@ -22,6 +23,10 @@ export default class Controller {
 
 		this.spawnInitialTree();
 		this.entities.push(new MouseEntity(this));
+
+		const bb = new BabyMountain(this);
+		bb.position.y = 30;
+		this.entities.push(bb);
 	}
 
 	spawnInitialTree() {
