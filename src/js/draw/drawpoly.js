@@ -29,8 +29,10 @@ export class DrawPoly extends ComboDrawable {
      */
     safeDraw(context, startLength, endLength) {
         if (this.fill) {
+            const drawnAmt = (endLength - startLength) / this.length;
             context.beginPath();
             context.fillStyle = 'white';
+            context.globalAlpha = drawnAmt;
             for (let i = 0; i < this.points.length; i++) {
                 if (i == 0) {
                     context.moveTo(this.points[i].x, this.points[i].y);
@@ -40,6 +42,7 @@ export class DrawPoly extends ComboDrawable {
                 }
             }
             context.fill();
+            context.globalAlpha = 1;
         }
         super.safeDraw(context, startLength, endLength);
     }
