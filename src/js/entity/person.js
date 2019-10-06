@@ -29,6 +29,7 @@ export class Person extends Entity {
         this.drawSpeed *= 0.3;
 
         this.hopper = new Hopper(controller, this);
+        this.childed = false;
     }
 
     setGoal(goal) {

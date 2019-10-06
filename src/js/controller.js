@@ -27,18 +27,6 @@ export default class Controller {
 		this.spawnInitialTree();
 		this.entities.push(new MouseEntity(this));
 
-		const bb = new BabyMountain(this);
-		bb.position.y = 30;
-		this.entities.push(bb);
-
-		const g = new Giant(this);
-		g.position.x = 50;
-		this.entities.push(g);
-
-		const b = new BabyPerson(this);
-		b.position.x = -70;
-		this.entities.push(b);
-
 		this.musicThing = new MusicThing(this);
 	}
 
@@ -69,7 +57,7 @@ export default class Controller {
 
 		// HACK for quickly debugging
 		if (this.random.bool(0.1)) {
-			// this.clickRandomEntity();
+			this.clickRandomEntity();
 		}
 
 		this.musicThing.update(dt);
@@ -172,5 +160,9 @@ export default class Controller {
 				break;
 			}
 		}
+	}
+
+	makeThePeopleWantToHaveBabies() {
+
 	}
 }

@@ -46,14 +46,15 @@ export class BabyMountain extends Entity {
 
     handleClick() {
         const poses = [
-            {x: -40, y: -10},
-            {x: 0, y: 10},
-            {x: 40, y: -10},
+            {x: -40, y: -10, center: false},
+            {x: 0, y: 10, center: true},
+            {x: 40, y: -10, center: false},
         ];
         for (const pos of poses) {
-            const house = new Mountain(this.controller);
-            house.position = addPoints(this.position, pos);
-            this.controller.newEntities.push(house);
+            const mountain = new Mountain(this.controller);
+            mountain.position = addPoints(this.position, pos);
+            mountain.center = pos.center;
+            this.controller.newEntities.push(mountain);
             this.done = true;
         }
         return true;

@@ -5,6 +5,7 @@ import { DrawEllipse } from "../draw/drawellipse";
 import { Person } from "./person";
 import { slurp, clamp } from "../util";
 import Tone from 'tone';
+import { BabyMountain } from "./babymountain";
 
 const synth = new Tone.PolySynth(4, Tone.Synth, {
     oscillator : {
@@ -62,7 +63,20 @@ export class Egg extends Entity {
 
         if (lastDesired != this.desiredScale) {
             const note = this.controller.random.pick(notes);
-            synth.triggerAttackRelease(note, '1n');    
+            synth.triggerAttackRelease(note, '1n');
+
+            if (numPeople > 3 && numPeople % 3 == 0) {
+                const bb = new BabyMountain(this.controller);
+                let dist = 100;
+                let point = null;
+                while (point == null) {
+                    const randomEntity = this.controller.random.pick(this.controller.entities);
+                    point = randomEntity.tryGetFreeNearbyPoint(dist, 0.8 * dist);
+                    dist *= 1.1;
+                }
+                bb.position = point;
+                this.controller.newEntities.push(bb);
+            }
         }
     }
 }

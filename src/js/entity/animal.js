@@ -4,6 +4,7 @@ import { ComboDrawable } from "../draw/combodrawable";
 import { DrawCircle } from "../draw/drawcircle";
 import { DrawLine } from "../draw/drawline";
 import { GoalBehaviour } from "../behaviour/goalbehaviour";
+import { Hopper } from "../animator/hopper";
 
 export class Animal extends Entity {
 
@@ -18,6 +19,7 @@ export class Animal extends Entity {
         ]);
         this.goal = null;
         this.follower = null;
+        this.hopper = new Hopper(this.controller, this);
     }
 
     setGoal(goal) {
@@ -33,6 +35,13 @@ export class Animal extends Entity {
         if (this.goal == null && this.controller.random.bool(0.01)) {
             this.lookForFriend();
         }
+
+        this.hopper.update(dt);
+    }
+
+    localRender(context) {
+        this.hopper.adjustContext(context);
+        super.localRender(context);
     }
 
     lookForFriend() {
