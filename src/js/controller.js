@@ -96,6 +96,17 @@ export default class Controller {
 				return;
 			}
 		}
+		// Now we fall back to a more lenient click, to help with things like mobile
+		// TODO: Only do this on mobile?
+		for (const entity of this.entities) {
+			const dist = sqDistBetween(point, entity.position);
+			if (dist < 30 * 30) {
+				const handledClick = entity.handleClick();
+				if (handledClick) {
+					return;
+				}
+			}
+		}
 	}
 
 	handleMouseMove(point, mouseDown) {
