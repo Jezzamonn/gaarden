@@ -1,5 +1,7 @@
 Take a break. Come play in the gaarden.
 
+![gif of gaarden](promo/preview.gif)
+
 gaarden is equal parts about interaction and observation. Entry for Ludum Dare 45: "Start with Nothing".
 
 - Play it at jezzamon.itch.io/gaarden
