@@ -23,19 +23,21 @@ function init() {
 	// Kick off the update loop
 	window.requestAnimationFrame(everyFrame);
 
-	document.addEventListener('mousedown', (evt) => {
-		mouseDown = true;
-		handleClick(evt);
-		handleMouseMove(evt);
-		if (Tone.context.state !== 'running') {
-			Tone.context.resume();
-		}
+	document.addEventListener('mousedown', (evt) => handleMouseDown({x: evt.clientX, y: evt.clientY }));
+	document.addEventListener('mouseup', (evt) => handleMouseUp({x: evt.clientX, y: evt.clientY }));
+	document.addEventListener('mousemove', (evt) => handleMouseMove({x: evt.clientX, y: evt.clientY }));
+	document.addEventListener('touchstart', (evt) => {
+		evt.preventDefault();
+		handleMouseDown({x: evt.touches[0].clientX, y: evt.touches[0].clientY })
 	});
-	document.addEventListener('mouseup', (evt) => {
-		mouseDown = false;
-		handleMouseMove(evt);
+	document.addEventListener('touchend', (evt) => {
+		evt.preventDefault();
+		handleMouseUp({x: evt.changedTouches[0].clientX, y: evt.changedTouches[0].clientY })
 	});
-	document.addEventListener('mousemove', handleMouseMove);
+	document.addEventListener('touchmove', (evt) => {
+		evt.preventDefault();
+		handleMouseMove({x: evt.touches[0].clientX, y: evt.touches[0].clientY })
+	});
 	
 	window.Tone = Tone;
 }
@@ -67,23 +69,34 @@ function render() {
 	controller.render(context);
 }
 
-/**
- * @param {MouseEvent} event 
- */
-function handleClick(event) {
-	const pixelRatio = window.devicePixelRatio || 1;
-	controller.handleClick({
-		x: (event.clientX - window.innerWidth / 2) / (scale / pixelRatio),
-		y: (event.clientY - window.innerHeight / 2) / (scale / pixelRatio),
-	});
+function handleMouseDown(point) {
+	mouseDown = true;
+	if (Tone.context.state !== 'running') {
+		Tone.context.resume();
+	}
+
+	const gamePoint = windowPointToGamePoint(point);
+	controller.handleClick(gamePoint);
+
+	handleMouseMove(point);
 }
 
-function handleMouseMove(event) {
+function handleMouseUp(point) {
+	mouseDown = false;
+	handleMouseMove(point);
+}
+
+function handleMouseMove(point) {
+	const gamePoint = windowPointToGamePoint(point);
+	controller.handleMouseMove(gamePoint, mouseDown);
+}
+
+function windowPointToGamePoint(p) {
 	const pixelRatio = window.devicePixelRatio || 1;
-	controller.handleMouseMove({
-		x: (event.clientX - window.innerWidth / 2) / (scale / pixelRatio),
-		y: (event.clientY - window.innerHeight / 2) / (scale / pixelRatio),
-	}, mouseDown);
+	return {
+		x: (p.x - window.innerWidth / 2) / (scale / pixelRatio),
+		y: (p.y - window.innerHeight / 2) / (scale / pixelRatio),
+	}
 }
 
 function handleResize(evt) {
