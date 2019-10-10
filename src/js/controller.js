@@ -99,8 +99,10 @@ export default class Controller {
 		// Now we fall back to a more lenient click, to help with things like mobile
 		// TODO: Only do this on mobile?
 		for (const entity of this.entities) {
-			const dist = sqDistBetween(point, entity.position);
-			if (dist < 30 * 30) {
+			// Also we adjust it with scale so as you zoom out you can still click on things.
+			const mouseDist = Math.max(30, 20 / this.camera.zoom);
+			const sqDist = sqDistBetween(point, entity.position);
+			if (sqDist < mouseDist * mouseDist) {
 				const handledClick = entity.handleClick();
 				if (handledClick) {
 					return;
