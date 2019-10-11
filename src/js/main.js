@@ -51,9 +51,13 @@ function everyFrame() {
 
 function update() {
 	let curTime = Date.now();
-	let dt = (curTime - lastTime) / 1000;
-	controller.update(dt);
-	lastTime = curTime;
+	const stepMs = 1000 / 60;
+	for (let i = 0; lastTime < curTime; i++, lastTime += stepMs) {
+		// Only game update for 10 steps at most otherwise we'll lag out a bunch
+		if (i < 10) {
+			controller.update(stepMs / 1000);
+		}
+	}
 }
 
 function render() {
