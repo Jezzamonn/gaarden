@@ -37,7 +37,7 @@ function init() {
 	document.addEventListener('touchmove', (evt) => {
 		evt.preventDefault();
 		handleMouseMove({x: evt.touches[0].clientX, y: evt.touches[0].clientY })
-	});
+	}, { passive: false });
 	
 	window.Tone = Tone;
 }
