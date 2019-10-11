@@ -1,5 +1,5 @@
 import Controller from "./controller";
-import { clonePoint, slurp, experp } from "./util";
+import { clonePoint, slurp, experp, clamp } from "./util";
 import { MouseEntity } from "./entity/mouse";
 
 const DEFAULT_SIZE = 500;
@@ -59,11 +59,13 @@ export class Camera {
             x: slurp(top.x, bottom.x, 0.5),
             y: slurp(top.y, bottom.y, 0.5),
         }
-        const width = Math.max(bottom.x - top.x, DEFAULT_SIZE);
-        const height = Math.max(bottom.y - top.y, DEFAULT_SIZE);
+        const minimumWindowWidth = clamp(0.8 * window.innerWidth, 0, 500);
+        const minimumWindowHeight = clamp(0.8 * window.innerHeight, 0, 500);
+        const width = clamp(bottom.x - top.x, minimumWindowWidth, Infinity);
+        const height = clamp(bottom.y - top.y, minimumWindowHeight, Infinity);
         const xScale = DEFAULT_SIZE / width;
         const yScale = DEFAULT_SIZE / height;
-        this.desiredZoom = 0.9 * Math.min(xScale, yScale);
+        this.desiredZoom = 0.9 * Math.max(xScale, yScale);
     }
 
     /**
